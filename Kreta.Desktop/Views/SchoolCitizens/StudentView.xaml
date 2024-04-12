@@ -65,8 +65,15 @@
                      MinWidth="80" 
                      Content="Mentés"
                      Command="{Binding DoSaveCommand}"
-                     CommandParameter="{Binding SelectedStudent}"
-                     />
+                     CommandParameter="{Binding SelectedStudent}">
+                <Button.IsEnabled>
+                    <MultiBinding Converter="{StaticResource inverseAndBooleansToBooleanConverter}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding ElementName="tbFirstName" Path="(Validation.HasError)"/>
+                        <Binding ElementName="tbLastName" Path="(Validation.HasError)"/>
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+                     
             <Button  Margin="0 10 2 2"
                      HorizontalAlignment="Right"
                      MinWidth="80"
@@ -76,7 +83,7 @@
                      />
         </StackPanel>
 
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="2 2 2 2" Padding="0 2"
+        <TextBox x:Name="tbLastName" Grid.Row="3" Grid.Column="1" Margin="2 2 2 2" Padding="0 2"
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate3}">
             <TextBox.Text>
                 <Binding Path="SelectedStudent.LastName" Mode="TwoWay" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
@@ -86,7 +93,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox Grid.Row="4" Grid.Column="1" Margin="2 2 2 2" Padding="0 2">
+        <TextBox x:Name="tbFirstName" Grid.Row="4" Grid.Column="1" Margin="2 2 2 2" Padding="0 2">
             <TextBox.Text>
                 <Binding Path="SelectedStudent.FirstName" Mode="TwoWay" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
